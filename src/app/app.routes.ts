@@ -5,5 +5,9 @@ export const APP_ROUTES: Routes = [
   {
     path: 'tipoEquipamento',
     loadChildren: () => import('./tipoEquipamento/tipoEquipamento.routes').then(m => m.COURSES_ROUTES)
+  },
+  {
+    path: 'equipamento',
+    loadChildren: () => import('./equipamento/equipamento.routes').then(m => m.COURSES_ROUTES)
   }
 ];
