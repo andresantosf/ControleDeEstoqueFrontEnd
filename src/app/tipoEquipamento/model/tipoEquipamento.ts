@@ -1,5 +1,5 @@
 export interface TipoEquipamento {
-  id: string;
+  idTipoEquipamento: string;
   nomeTipoEquipamento: string;
   descricaoTipoEquipamento: string;
 }

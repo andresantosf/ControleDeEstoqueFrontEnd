@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { first } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { TipoEquipamento } from '../model/tipoEquipamento';
 import { TipoEquipamentoPage } from '../model/tipoEquipamento-page';
@@ -37,18 +37,18 @@ export class TipoEquipamentoService {
   }
 
   save(record: Partial<TipoEquipamento>) {
-    if (record.id) {
+    if (record.idTipoEquipamento) {
       return this.update(record);
     }
     return this.create(record);
   }
 
   private create(record: Partial<TipoEquipamento>) {
-    delete record.id;
+    delete record.idTipoEquipamento;
     return this.httpClient.post<TipoEquipamento>(this.API, record).pipe(first());
   }
   private update(record: Partial<TipoEquipamento>) {
-    return this.httpClient.put<TipoEquipamento>(`${this.API}/${record.id}`, record).pipe(first());
+    return this.httpClient.put<TipoEquipamento>(`${this.API}/${record.idTipoEquipamento}`, record).pipe(first());
   }
   remove(id: string) {
     return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
@@ -59,4 +59,8 @@ export class TipoEquipamentoService {
       data: errorMessage
     });
   }
+
+    getTipoEquipamentos(): Observable<TipoEquipamento[]> {
+      return this.httpClient.get<TipoEquipamento[]>(`${this.API}/list`);
+    }
 }

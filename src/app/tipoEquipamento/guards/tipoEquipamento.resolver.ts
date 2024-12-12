@@ -12,9 +12,9 @@ export class TipoEquipamentoResolver {
   constructor(private service: TipoEquipamentoService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TipoEquipamento> {
-    if (route.params && route.params['id']) {
-      return this.service.loadById(route.params['id']);
+    if (route.params && route.params['idTipoEquipamento']) {
+      return this.service.loadById(route.params['idTipoEquipamento']);
     }
-    return of({ id: '', nomeTipoEquipamento: '', descricaoTipoEquipamento: ''});
+    return of({ idTipoEquipamento: '', nomeTipoEquipamento: '', descricaoTipoEquipamento: ''});
   }
 }

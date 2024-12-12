@@ -1,0 +1,38 @@
+<mat-table [dataSource]="statusEquipamento">
+
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="nomeStatusEquipamento">
+    <mat-header-cell *matHeaderCellDef> Status do Equipamento </mat-header-cell>
+    <mat-cell *matCellDef="let statusEquipamento"> {{ statusEquipamento.nomeStatusEquipamento }} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="descricaoStatusEquipamento">
+    <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+    <mat-cell *matCellDef="let statusEquipamento"> {{statusEquipamento.descricaoStatusEquipamento}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef class="action-column">
+      <button mat-mini-fab (click)="onAdd()" color="primary" aria-label="Adicionar um Status do Equipamento"
+        class="action-column-header">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let statusEquipamento" class="action-column">
+      <button mat-icon-button (click)="onEdit(statusEquipamento)" color="primary" aria-label="Editar Status do Equipamento">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onDelete(statusEquipamento)" color="warn" aria-label="Remover Status do Equipamento">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

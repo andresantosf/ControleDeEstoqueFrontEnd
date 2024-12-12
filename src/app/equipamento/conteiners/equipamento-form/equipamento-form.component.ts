@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, UntypedFormArray, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,18 +15,30 @@ import { ActivatedRoute } from '@angular/router';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { Equipamento } from '../../model/equipamento';
 import { EquipamentoService } from '../../services/equipamento.service';
+import { StatusEquipamento } from '../../../statusEquipamento/model/statusEquipamento';
+import { StatusEquipamentoService } from '../../../statusEquipamento/services/statusEquipamento.service';
+import { TipoEquipamentoService } from '../../../tipoEquipamento/services/tipoEquipamento.service';
+import { TipoEquipamento } from '../../../tipoEquipamento/model/tipoEquipamento';
 
 
 @Component({
   selector: 'app-equipamento-form',
   standalone: true,
-  imports: [MatCardModule, MatToolbarModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule], templateUrl: './equipamento-form.component.html',
+  imports: [MatCardModule,  CommonModule, MatToolbarModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule], templateUrl: './equipamento-form.component.html',
   styleUrl: './equipamento-form.component.scss'
 })
 export class EquipamentoFormComponent {
   form!: FormGroup;
 
+  statusEquipamentos: StatusEquipamento[] = [];
+  selectedStatus: string = ''; 
+
+  tipoEquipamentos: TipoEquipamento[] = [];
+  selectedTipo: string = ''; 
+
   constructor(
+    private tipoEquipamentoService: TipoEquipamentoService,
+    private statusEquipamentoService: StatusEquipamentoService,
     private formBuilder: NonNullableFormBuilder,
     private service: EquipamentoService,
     private snackBar: MatSnackBar,
@@ -71,5 +83,33 @@ export class EquipamentoFormComponent {
       duration: 5000
     });
   }
+
+  ngOnInit(): void {
+    this.getStatusEquipamentos();
+    this.getTipoEquipamentos();
+  }
+
+  getStatusEquipamentos(): void {
+    this.statusEquipamentoService.getStatusEquipamentos().subscribe(
+      (data) => {
+        this.statusEquipamentos = data;
+      },
+      (error) => {
+        console.error('Erro ao carregar os status de equipamentos', error);
+      }
+    );
+  }
+
+  getTipoEquipamentos(): void {
+    this.tipoEquipamentoService.getTipoEquipamentos().subscribe(
+      (data) => {
+        this.tipoEquipamentos = data;
+      },
+      (error) => {
+        console.error('Erro ao carregar os tipo de equipamentos', error);
+      }
+    );
+  }
+
 
 }

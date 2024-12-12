@@ -13,34 +13,34 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute } from '@angular/router';
 
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
-import { TipoEquipamento } from '../../model/tipoEquipamento';
-import { TipoEquipamentoService } from '../../services/tipoEquipamento.service';
+import { StatusEquipamento } from '../../model/statusEquipamento';
+import { StatusEquipamentoService } from '../../services/statusEquipamento.service';
 
 
 @Component({
-  selector: 'app-tipoEquipamento-form',
+  selector: 'app-statusEquipamento-form',
   standalone: true,
-  imports: [MatCardModule, MatToolbarModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule], templateUrl: './tipoEquipamento-form.component.html',
-  styleUrl: './tipoEquipamento-form.component.scss'
+  imports: [MatCardModule, MatToolbarModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule], templateUrl: './statusEquipamento-form.component.html',
+  styleUrl: './statusEquipamento-form.component.scss'
 })
-export class TipoEquipamentoFormComponent {
+export class StatusEquipamentoFormComponent {
   form!: FormGroup;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
-    private service: TipoEquipamentoService,
+    private service: StatusEquipamentoService,
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
     public formUtils: FormUtilsService
   ) {
 
-    const tipoEquipamento: TipoEquipamento = this.route.snapshot.data['tipoEquipamento'];
+    const statusEquipamento: StatusEquipamento = this.route.snapshot.data['statusEquipamento'];
 
     this.form = this.formBuilder.group({
-      id: [tipoEquipamento.idTipoEquipamento],
-      nomeTipoEquipamento: [tipoEquipamento.nomeTipoEquipamento, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      descricaoTipoEquipamento: [tipoEquipamento.descricaoTipoEquipamento, [Validators.required]]
+      id: [statusEquipamento.idstatusequipamento],
+      nomeStatusEquipamento: [statusEquipamento.nomeStatusEquipamento, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      descricaoStatusEquipamento: [statusEquipamento.descricaoStatusEquipamento, [Validators.required]]
     });
 
   }
@@ -60,14 +60,14 @@ export class TipoEquipamentoFormComponent {
   }
 
   private onSuccess() {
-    this.snackBar.open('Tipo de Equipamento salvo com sucesso', '', {
+    this.snackBar.open('Status do Equipamento salvo com sucesso', '', {
       duration: 5000
     });
     this.onCancel();
 
   }
   private onError() {
-    return this.snackBar.open('Erro ao salvar Tipo de Equipamento', '', {
+    return this.snackBar.open('Erro ao salvar Status do Equipamento', '', {
       duration: 5000
     });
   }

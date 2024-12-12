@@ -11,30 +11,30 @@ import { catchError, Observable, of, tap } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
-import { TipoEquipamentoListComponent } from '../../components/tipoEquipamento-list/tipoEquipamento-list.component';
-import { TipoEquipamento } from '../../model/tipoEquipamento';
-import { TipoEquipamentoPage } from '../../model/tipoEquipamento-page';
-import { TipoEquipamentoService } from '../../services/tipoEquipamento.service';
+import { StatusEquipamentoListComponent } from '../../components/statusEquipamento-list/statusEquipamento-list.component';
+import { StatusEquipamento } from '../../model/statusEquipamento';
+import { StatusEquipamentoPage } from '../../model/statusEquipamento-page';
+import { StatusEquipamentoService } from '../../services/statusEquipamento.service';
 
 
 @Component({
-  selector: 'app-tipoEquipamento',
-  templateUrl: './tipoEquipamento.component.html',
-  styleUrls: ['./tipoEquipamento.component.scss'],
+  selector: 'app-statusEquipamento',
+  templateUrl: './statusEquipamento.component.html',
+  styleUrls: ['./statusEquipamento.component.scss'],
   standalone: true,
-  imports: [MatCardModule, MatToolbarModule, TipoEquipamentoListComponent, MatPaginatorModule, MatProgressSpinnerModule, AsyncPipe],
+  imports: [MatCardModule, MatToolbarModule, StatusEquipamentoListComponent, MatPaginatorModule, MatProgressSpinnerModule, AsyncPipe],
 })
 
-export class TipoEquipamentoComponent {
+export class StatusEquipamentoComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
   pageIndex = 0;
   pageSize = 10;
 
-  tipoEquipamento$: Observable<TipoEquipamentoPage> | null = null;
+  statusEquipamento$: Observable<StatusEquipamentoPage> | null = null;
 
   constructor(
-    private tipoEquipamentoService: TipoEquipamentoService,
+    private statusEquipamentoService: StatusEquipamentoService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -46,15 +46,15 @@ export class TipoEquipamentoComponent {
   }
 
   refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
-    this.tipoEquipamento$ = this.tipoEquipamentoService.list(pageEvent.pageIndex, pageEvent.pageSize)
+    this.statusEquipamento$ = this.statusEquipamentoService.list(pageEvent.pageIndex, pageEvent.pageSize)
       .pipe(
         tap(() => {
           this.pageIndex = pageEvent.pageIndex;
           this.pageSize = pageEvent.pageSize;
         }),
         catchError(error => {
-          this.onError('Erro ao carregar Tipos de Equipamento.');
-          return of({ tipoEquipamento: [], totalElements: 0, totalPages: 0 })
+          this.onError('Erro ao carregar Status do Equipamento.');
+          return of({ statusEquipamento: [], totalElements: 0, totalPages: 0 })
         })
       )
   }
@@ -69,27 +69,27 @@ export class TipoEquipamentoComponent {
     this.router.navigate(['new'], { relativeTo: this.route })
   }
 
-  onEdit(tipoEquipamento: TipoEquipamento) {
-    this.router.navigate(['edit', tipoEquipamento.idTipoEquipamento], { relativeTo: this.route })
+  onEdit(statusEquipamento: StatusEquipamento) {
+    this.router.navigate(['edit', statusEquipamento.idstatusequipamento], { relativeTo: this.route })
   }
-  onRemove(tipoEquipamento: TipoEquipamento) {
+  onRemove(statusEquipamento: StatusEquipamento) {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: 'Tem certeza que deseja remover este Tipo de Equipamento?',
+      data: 'Tem certeza que deseja remover este Status do Equipamento?',
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.tipoEquipamentoService.remove(tipoEquipamento.idTipoEquipamento).subscribe(
+        this.statusEquipamentoService.remove(statusEquipamento.idstatusequipamento).subscribe(
           () => {
             this.refresh();
-            this.snackBar.open('Tipo de Equipamento removido com sucesso', 'X', {
+            this.snackBar.open('Status do Equipamento removido com sucesso', 'X', {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
             });
           },
-          error => this.onError('Erro ao tentar remover Tipo de Equipamento')
+          error => this.onError('Erro ao tentar remover Status do Equipamento')
         );
       }
     });

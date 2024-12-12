@@ -21,6 +21,32 @@
         <mat-error>{{formUtils.getErrorMessage(form, "name")}}</mat-error>
         }
       </mat-form-field>
+
+     <!-- Campo Status -->
+     <mat-form-field class="full-width">
+      <mat-label>Status do Equipamento</mat-label>
+      <select matNativeControl formControlName="statusEquipamento">
+        <option *ngFor="let status of statusEquipamentos" [value]="status.idstatusequipamento">
+          {{ status.nomeStatusEquipamento }}
+        </option>
+      </select>
+      <mat-error *ngIf="form.get('statusEquipamento')?.invalid">
+        Selecione um status válido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo Tipo Equipamento -->
+    <mat-form-field class="full-width">
+      <mat-label>Tipo do Equipamento</mat-label>
+      <select matNativeControl formControlName="tipoEquipamento">
+        <option *ngFor="let tipo of tipoEquipamentos" [value]="tipo.idTipoEquipamento">
+          {{ tipo.nomeTipoEquipamento }}
+        </option>
+      </select>
+      <mat-error *ngIf="form.get('tipoEquipamento')?.invalid">
+        Selecione um tipo válido
+      </mat-error>
+    </mat-form-field>
     </form>
   </mat-card-content>
 

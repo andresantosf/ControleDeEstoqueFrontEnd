@@ -7,6 +7,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./tipoEquipamento/tipoEquipamento.routes').then(m => m.COURSES_ROUTES)
   },
   {
+    path: 'statusEquipamento',
+    loadChildren: () => import('./statusEquipamento/statusEquipamento.routes').then(m => m.COURSES_ROUTES)
+  },
+  {
     path: 'equipamento',
     loadChildren: () => import('./equipamento/equipamento.routes').then(m => m.COURSES_ROUTES)
   }

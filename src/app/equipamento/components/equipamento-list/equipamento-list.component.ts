@@ -3,6 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Equipamento } from '../../model/equipamento';
+import { StatusEquipamento } from '../../../statusEquipamento/model/statusEquipamento';
+import { StatusEquipamentoService } from '../../../statusEquipamento/services/statusEquipamento.service';
 
 
 @Component({
@@ -14,6 +16,9 @@ import { Equipamento } from '../../model/equipamento';
 })
 export class EquipamentoListComponent {
 
+  statusEquipamentos: StatusEquipamento[] = [];
+  selectedStatus: string = '';  
+  
   @Input() equipamento: Equipamento[] = [];
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
@@ -23,6 +28,7 @@ export class EquipamentoListComponent {
   readonly displayedColumns = ['nomeEquipamento', 'descricaoEquipamento', 'actions']
 
   constructor(
+      private statusEquipamentoService: StatusEquipamentoService,
   ) {}
 
 
@@ -36,5 +42,20 @@ export class EquipamentoListComponent {
 
   onDelete(equipamento: Equipamento) {
     this.remove.emit(equipamento);
+  }
+
+  ngOnInit(): void {
+    this.getStatusEquipamentos();
+  }
+
+  getStatusEquipamentos(): void {
+    this.statusEquipamentoService.getStatusEquipamentos().subscribe(
+      (data) => {
+        this.statusEquipamentos = data;
+      },
+      (error) => {
+        console.error('Erro ao carregar os status de equipamentos', error);
+      }
+    );
   }
 }
